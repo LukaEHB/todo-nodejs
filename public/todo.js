@@ -9,4 +9,7 @@ const Todo = class {
 
 };
 
-new Todo();
+$(document).ready(function(){
+	new Todo();
+});
+
