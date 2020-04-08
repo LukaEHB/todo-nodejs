@@ -64,15 +64,21 @@ const Todo = class {
 
 	toggleDone(e){
 		e.preventDefault();
-		const index = $(e.currentTarget)
+		const id = $(e.currentTarget)
 			.parent('.todo')
 			.toggleClass('is-done')
-			.index();
+			.data('id');
 			
 			const isChecked = $(e.currentTarget).find('input').prop('checked');
 			$(e.currentTarget).find('input').prop('checked', !isChecked);
-			// this.tasks[index].checked = !isChecked;
 
+			fetch('/updateItem/'+id, {
+				method: 'PATCH',
+				body: JSON.stringify({"prop": "checked", "value":!isChecked }),
+				headers: {
+					'Content-type': 'application/json'
+				}
+			});
 	}
 };
 

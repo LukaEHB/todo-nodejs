@@ -43,6 +43,19 @@ app.delete('/deleteItem/:id',(req,res)=>{
   })
 })
 
+app.patch('/updateItem/:id',(req,res)=>{
+  fs.readFile(__dirname+'/db.json', (err,data)=>{
+    const db = JSON.parse(data);
+    db.items.forEach(item => {
+      if (item.id === req.params.id) {
+        item[req.body.prop] = req.body.value;
+      }
+    });
+    fs.writeFileSync(__dirname+'/db.json', JSON.stringify(db));
+    res.status(200).json({message:"task updated"});
+  })
+});
+
 app.listen(PORT, ()=>{
   console.log("server is running on localhost:"+PORT);
 })
